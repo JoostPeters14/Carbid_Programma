@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{5629203d-57fb-4223-8db4-dc965ae85829}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Wanneer de knop wordt ingedrukt, gaat de lamp aan of uit *)
+IF GVL_Carbid.Button THEN
+   GVL_Carbid.Lamp := TRUE;    (* Zet lamp aan *)
+ELSE
+    GVL_Carbid.Lamp := FALSE;   (* Zet lamp uit *)
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="10" Count="4" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
