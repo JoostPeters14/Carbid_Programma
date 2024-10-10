@@ -7,31 +7,24 @@ VAR_GLOBAL
    		Lamp   : BOOL;     (* Output voor de lamp *)
 		
 		(* Inputs *)
-		StartProcess    : BOOL;        (* Start het proces van herladen en afvuren *)
-		FlameOn         : BOOL;        (* Gebruiker houdt vlam bij de bus *)
+		StartProcess    : BOOL;		(* Start het proces van herladen en afvuren *)
+		FlameOn         : BOOL;		(* Gebruiker houdt vlam bij de bus *)
 		
 		(* Outputs *)
-		RemoveDebris    : BOOL;        (* Verwijder resten van eerder schot *)
-   		AddCarbid       : BOOL;        (* Voeg carbid toe *)
-    	AddWater        : BOOL;        (* Voeg water toe *)
-    	PlaceBall       : BOOL;        (* Plaats bal in bus *)
-    	Fire            : BOOL;        (* Carbid ontsteekt en schot vuurt *)
-    	CheckAfterShot  : BOOL;        (* Controleer bus na schot *)
-    	RetrieveBall    : BOOL;        (* Haal bal op *)
+   		AddCarbid       : BOOL;		(* Voeg carbid toe *)
+    	AddWater        : BOOL;		(* Voeg water toe *)
+    	PlaceBall       : BOOL;		(* Plaats bal in bus *)
+    	ReadyToFire 	: BOOL; 	(* Indicatie dat er gevuurt kan worden*)
+		Fire            : BOOL;		(* Carbid ontsteekt en schot vuurt *)
+    	CheckAfterShot  : BOOL;		(* Controleer bus na schot *)
+    	RemoveDebris    : BOOL;		(* Verwijder resten van eerder schot *)
+		RetrieveBall    : BOOL;		(* Haal bal op *)
 		
 		(* Internal variables *)
-    	GasFormation    : BOOL;        (* Gasvorming in de bus *)
-    	EnoughWater     : BOOL;        (* Genoeg water toegevoegd indicator *)
-    	BallSealed      : BOOL;        (* Bal sluit de bus luchtdicht af *)
-		
-		(*(* Outputs *)
-		RemoveDebris_done	: BOOL;
-		AddCarbid_done		: BOOL;
-		AddWater_done		: BOOL;
-		PlaceBall_done		: BOOL;
-		Fire_done			: BOOL;
-		CheckAfterShot_done	: BOOL;
-		RetrieveBall_done	: BOOL;*)
+    	GasFormation    : BOOL;		(* Gasvorming in de bus *)
+    	EnoughWater     : BOOL;		(* Genoeg water toegevoegd indicator *)
+    	BallSealed      : BOOL;		(* Bal sluit de bus luchtdicht af *)
+		ProcessStep     : INT := 0;	(* Processtappen indicator *)
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

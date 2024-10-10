@@ -46,8 +46,18 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"201"</v>
+              <v n="TextDefault">"Mis leuk om de hoeveelheid water te zien oplopen en dan als het gas vormt zie je het weer omlaag gaan tot alle gas gevormd is"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"395"</v>
               <v n="TextDefault">"PlaceBall"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"935"</v>
+              <v n="TextDefault">"ReadyToFire"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
