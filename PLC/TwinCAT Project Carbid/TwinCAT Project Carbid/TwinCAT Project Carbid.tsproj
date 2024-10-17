@@ -6,16 +6,31 @@
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
+				<Task Id="4" Priority="1" CycleTime="100000" AmsPort="351" AdtTasks="true">
+					<Name>Task_1</Name>
+				</Task>
+				<Task Id="5" Priority="2" CycleTime="100000" AmsPort="352" AdtTasks="true">
+					<Name>Task_2</Name>
+				</Task>
 			</Tasks>
 		</System>
 		<Plc>
 			<Project GUID="{79EF923A-F598-46A5-AD3A-0A89CE771CC3}" Name="Untitled1" PrjFilePath="Untitled1\Untitled1.plcproj" TmcFilePath="Untitled1\Untitled1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{60A7A2E7-DA2E-2A5C-C1B2-338891FBD49D}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{1D6348B3-524A-62A9-F288-209F6215D38E}">
 					<Name>Untitled1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
+							<Name>Task_4</Name>
+							<ManualConfig>
+								<OTCID>#x02010040</OTCID>
+							</ManualConfig>
+							<Priority>1</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+						<Context>
+							<Id NeedCalleeCall="true">1</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>
@@ -25,6 +40,7 @@
 						</Context>
 					</Contexts>
 					<TaskPouOids>
+						<TaskPouOid Prio="1" OTCID="#x08502002"/>
 						<TaskPouOid Prio="20" OTCID="#x08502001"/>
 					</TaskPouOids>
 				</Instance>

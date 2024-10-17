@@ -30,6 +30,18 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Program_1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Program_2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Task_1.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Task_2.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="VISUs\VisualizationManager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
