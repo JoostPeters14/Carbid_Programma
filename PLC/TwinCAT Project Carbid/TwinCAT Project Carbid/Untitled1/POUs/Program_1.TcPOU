@@ -1,14 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="Program_1" Id="{8baa3dab-cece-4a1e-9c5e-978e8968a86a}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Program_1
+    <Declaration><![CDATA[PROGRAM UserTask
 VAR
+    tUserDelay : TON;  (* Timer voor gebruikersacties *)
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[(* Testen of VISU werkt later verwijderen*)
+IF GVL_Carbid.Button THEN
+   GVL_Carbid.Lamp := TRUE;    (* Zet lamp aan *)
+ELSE
+   GVL_Carbid.Lamp := FALSE;   (* Zet lamp uit *)
+END_IF
+
+(* Proces start door de gebruiker *)
+IF GVL_Carbid.StartProcess THEN
+    CASE GVL_Carbid.UserStep OF
+        0:  (* Voeg carbid toe *)
+            GVL_Carbid.AddCarbid := TRUE;
+            tUserDelay(IN := TRUE, PT := T#2S); (* Voeg 2 seconden vertraging toe *)
+            IF tUserDelay.Q THEN
+                GVL_Carbid.AddCarbid := FALSE;
+                GVL_Carbid.UserStep := 1; (* Ga naar de volgende stap *)
+                tUserDelay(IN := FALSE); (* Reset timer voor volgende stap *)
+            END_IF;
+
+        1:  (* Voeg water toe *)
+            GVL_Carbid.AddWater := TRUE;
+            IF GVL_Carbid.WaterAdded THEN   (* Communicatie met BusTask *)
+                GVL_Carbid.AddWater := FALSE;
+                GVL_Carbid.UserStep := 2;
+            END_IF;
+
+        2:  (* Plaats bal in bus *)
+            GVL_Carbid.PlaceBall := TRUE;
+            tUserDelay(IN := TRUE, PT := T#2S); (* Voeg 2 seconden vertraging toe *)
+            IF tUserDelay.Q THEN
+                GVL_Carbid.PlaceBall := FALSE;
+                GVL_Carbid.BallPlaced := TRUE;  (* Communicatie met BusTask *)
+                GVL_Carbid.UserStep := 3;
+                tUserDelay(IN := FALSE);
+            END_IF;
+
+        3:  (* Wacht op vuur *)
+            IF GVL_Carbid.BallPlaced AND GVL_Carbid.FlameOn THEN
+                GVL_Carbid.Fire := TRUE; (* Vuurt af *)
+                GVL_Carbid.UserStep := 4;
+            END_IF;
+
+        4:  (* Controleer bus na schot *)
+            GVL_Carbid.CheckAfterShot := TRUE;
+            tUserDelay(IN := TRUE, PT := T#2S); (* Voeg 2 seconden vertraging toe *)
+            IF tUserDelay.Q THEN
+                GVL_Carbid.CheckAfterShot := FALSE;
+                GVL_Carbid.UserStep := 5;
+                tUserDelay(IN := FALSE);
+            END_IF;
+
+        5:  (* Haal de bal op *)
+            GVL_Carbid.RetrieveBall := TRUE;
+            tUserDelay(IN := TRUE, PT := T#2S); (* Voeg 2 seconden vertraging toe *)
+            IF tUserDelay.Q THEN
+                GVL_Carbid.RetrieveBall := FALSE;
+                GVL_Carbid.UserStep := 0;  (* Reset naar begin *)
+                tUserDelay(IN := FALSE);
+            END_IF;
+    END_CASE;
+END_IF;]]></ST>
     </Implementation>
     <LineIds Name="Program_1">
+      <LineId Id="184" Count="59" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

@@ -1,30 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <GVL Name="GVL_Carbid" Id="{8d2a7e60-294b-41ef-945d-fbc277f02d31}">
-    <Declaration><![CDATA[{attribute 'qualified_only'}
-VAR_GLOBAL
-		Button : BOOL;     (* Input voor de knop *)
-   		Lamp   : BOOL;     (* Output voor de lamp *)
-		
-		(* Inputs *)
-		StartProcess    : BOOL;		(* Start het proces van herladen en afvuren *)
-		FlameOn         : BOOL;		(* Gebruiker houdt vlam bij de bus *)
-		
-		(* Outputs *)
-   		AddCarbid       : BOOL;		(* Voeg carbid toe *)
-    	AddWater        : BOOL;		(* Voeg water toe *)
-    	PlaceBall       : BOOL;		(* Plaats bal in bus *)
-    	ReadyToFire 	: BOOL; 	(* Indicatie dat er gevuurt kan worden*)
-		Fire            : BOOL;		(* Carbid ontsteekt en schot vuurt *)
-    	CheckAfterShot  : BOOL;		(* Controleer bus na schot *)
-    	RemoveDebris    : BOOL;		(* Verwijder resten van eerder schot *)
-		RetrieveBall    : BOOL;		(* Haal bal op *)
-		
-		(* Internal variables *)
-    	GasFormation    : BOOL;		(* Gasvorming in de bus *)
-    	EnoughWater     : BOOL;		(* Genoeg water toegevoegd indicator *)
-    	BallSealed      : BOOL;		(* Bal sluit de bus luchtdicht af *)
-		ProcessStep     : INT := 0;	(* Processtappen indicator *)
-END_VAR]]></Declaration>
+    <Declaration><![CDATA[VAR_GLOBAL
+    (* Var voor testen later verwijderen*)
+	Button : BOOL;
+	Lamp : BOOL;
+
+	(* UserTask-variabelen *)
+    StartProcess : BOOL;
+    UserStep : INT := 0;
+    AddCarbid : BOOL;
+    CarbidAdded : BOOL := FALSE;
+    AddWater : BOOL;
+    WaterAdded : BOOL := FALSE;
+    PlaceBall : BOOL;
+    BallPlaced : BOOL := FALSE;
+    FlameOn : BOOL;
+    Fire : BOOL := FALSE;
+	CheckAfterShot : BOOL := FALSE;
+	RetrieveBall  : BOOL := FALSE;
+
+    (* BusTask-variabelen *)
+    BusStep : INT := 0;
+    GasFormation : BOOL := FALSE;
+    EnoughGas : BOOL := FALSE;
+    ReadyToFire : BOOL := FALSE;
+    RemoveDebris : BOOL := FALSE;
+END_VAR
+]]></Declaration>
   </GVL>
 </TcPlcObject>
