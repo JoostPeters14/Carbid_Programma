@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="BusTask" Id="{17ffc23a-7847-4f66-8f73-a9451c7df59b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM BusTask
+VAR
+    tBusDelay : TON;        (* Timer voor busacties *)
+    tCarbidReaction : TON;  (* Timer voor gasvorming proces *)
+    tBlink : TON;           (* Timer voor knipperen van ReadyToFire *)
+    BlinkState : BOOL := FALSE;  (* Knipperstatus voor ReadyToFire *)
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Testen of VISU werkt later verwijderen *)
+IF GVL_Carbid.Lamp THEN
+    tBlink(IN := TRUE, PT := T#500MS);
+    IF tBlink.Q THEN
+        blinkState := NOT blinkState;
+        GVL_Carbid.BlinkingLamp := blinkState;  (* Laat lamp knipperen *)
+        tBlink(IN := FALSE);  (* Reset de timer *)
+    END_IF;
+ELSE
+    GVL_Carbid.BlinkingLamp := FALSE;  (* Zet lamp uit als GVL_Carbid.Lamp uit is *)
+END_IF
+
+(* Beheer processen in de bus *)
+CASE GVL_Carbid.BusStep OF
+    0:  (* Wacht op carbid toevoeging *)
+        IF GVL_Carbid.AddCarbid THEN
+			tBusDelay(IN := TRUE, PT := T#2S); (* Voeg 2 seconden vertraging toe *)
+			IF tBusDelay.Q THEN
+                GVL_Carbid.CarbidAdded := TRUE;
+                GVL_Carbid.BusStep := 1; (* Ga naar de volgende stap *)
+                tBusDelay(IN := FALSE); (* Reset timer voor volgende stap *)
+            END_IF;
+        END_IF;
+
+    1:  (* Wacht op water toevoeging *)
+        IF GVL_Carbid.AddWater THEN
+            tBusDelay(IN := TRUE, PT := T#2S); (* Gasvorming duurt 10 seconden *)
+            IF tBusDelay.Q THEN
+				GVL_Carbid.WaterAdded := TRUE;
+                GVL_Carbid.GasFormation := TRUE;
+                GVL_Carbid.BusStep := 2;
+                tBusDelay(IN := FALSE);
+            END_IF;
+        END_IF;
+		
+	2:	(* Wacht op genoeg gas *)
+		IF GVL_Carbid.GasFormation THEN
+			tCarbidReaction(IN := TRUE, PT := T#10S); (* Gasvorming duurt 10 seconden *)
+            IF tCarbidReaction.Q THEN
+                GVL_Carbid.EnoughGas := TRUE;
+				GVL_Carbid.GasFormation := FALSE;
+                GVL_Carbid.BusStep := 3;
+                tCarbidReaction(IN := FALSE);
+            END_IF;
+		END_IF
+
+    3:  (* Ready to Fire knippert als er genoeg gas is *)
+        IF GVL_Carbid.EnoughGas AND GVL_Carbid.BallPlaced THEN
+            tBlink(IN := TRUE, PT := T#500MS);  (* Knipperen elke 500 ms *)
+            IF tBlink.Q THEN
+                blinkState := NOT blinkState;  (* Wissel tussen aan en uit *)
+                GVL_Carbid.ReadyToFire := blinkState;
+            END_IF;
+            (* Ga naar de vuurfase wanneer de gebruiker het aangeeft *)
+            IF GVL_Carbid.Fire THEN
+                GVL_Carbid.Fire := TRUE;
+                GVL_Carbid.BusStep := 4;
+            END_IF;
+        END_IF;
+
+    4:  (* Vuur de bal af *)
+        GVL_Carbid.ReadyToFire := FALSE; (* Stop Ready to Fire *)
+		GVL_Carbid.WaterAdded := FALSE;
+		GVL_Carbid.CarbidAdded := FALSE;
+		GVL_Carbid.EnoughGas := FALSE;
+		GVL_Carbid.BallPlaced := FALSE;
+        GVL_Carbid.Fire := TRUE;  (* Afvuren *)
+        GVL_Carbid.BusStep := 5;
+
+    5:  (* Reset het systeem na het schot *)
+        GVL_Carbid.Fire := FALSE;
+        GVL_Carbid.RemoveDebris := TRUE;
+        tBusDelay(IN := TRUE, PT := T#2S);  (* 2 seconden voor opruimen *)
+        IF tBusDelay.Q THEN
+            GVL_Carbid.RemoveDebris := FALSE;
+            GVL_Carbid.BusStep := 0;  (* Reset bus *)
+            tBusDelay(IN := FALSE);
+        END_IF;
+END_CASE;]]></ST>
+    </Implementation>
+    <LineIds Name="BusTask">
+      <LineId Id="117" Count="15" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="177" Count="3" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="134" Count="5" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="142" Count="3" />
+      <LineId Id="183" Count="1" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="190" Count="1" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="194" Count="1" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="146" Count="16" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="163" Count="3" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="168" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

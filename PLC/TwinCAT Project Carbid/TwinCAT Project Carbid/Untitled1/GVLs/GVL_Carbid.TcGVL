@@ -5,16 +5,14 @@
     (* Var voor testen later verwijderen*)
 	Button : BOOL;
 	Lamp : BOOL;
+	BlinkingLamp : BOOL;
 
 	(* UserTask-variabelen *)
-    StartProcess : BOOL;
     UserStep : INT := 0;
+	StartProcess : BOOL;
     AddCarbid : BOOL;
-    CarbidAdded : BOOL := FALSE;
     AddWater : BOOL;
-    WaterAdded : BOOL := FALSE;
     PlaceBall : BOOL;
-    BallPlaced : BOOL := FALSE;
     FlameOn : BOOL;
     Fire : BOOL := FALSE;
 	CheckAfterShot : BOOL := FALSE;
@@ -22,7 +20,10 @@
 
     (* BusTask-variabelen *)
     BusStep : INT := 0;
-    GasFormation : BOOL := FALSE;
+    CarbidAdded : BOOL := FALSE;
+	WaterAdded : BOOL := FALSE;
+	BallPlaced : BOOL := FALSE;
+	GasFormation : BOOL := FALSE;
     EnoughGas : BOOL := FALSE;
     ReadyToFire : BOOL := FALSE;
     RemoveDebris : BOOL := FALSE;

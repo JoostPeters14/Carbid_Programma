@@ -16,13 +16,33 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"597"</v>
+              <v n="TextDefault">"BallPlaced"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"49"</v>
               <v n="TextDefault">"BallSealed"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"69"</v>
+              <v n="TextDefault">"Bus_Visu"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"500"</v>
+              <v n="TextDefault">"CarbidAdded"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"387"</v>
               <v n="TextDefault">"CheckAfterShot"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"882"</v>
+              <v n="TextDefault">"EnoughGas"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -71,8 +91,28 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"750"</v>
+              <v n="TextDefault">"RetriveBall"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"450"</v>
               <v n="TextDefault">"StartProcess"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"129"</v>
+              <v n="TextDefault">"TEST VISU"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"333"</v>
+              <v n="TextDefault">"User_Visu"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"341"</v>
+              <v n="TextDefault">"WaterAdded"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>

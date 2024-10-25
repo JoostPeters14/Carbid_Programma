@@ -24,16 +24,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="PlcTask.TcTTO">
+    <Compile Include="POUs\UserTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Program_1.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Program_2.TcPOU">
+    <Compile Include="POUs\BusTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Task_1.TcTTO">
@@ -45,7 +39,7 @@
     <Compile Include="VISUs\VisualizationManager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VISUs\Visualization_Carbid.TcVIS">
+    <Compile Include="VISUs\Visualization_Carbid_V2.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>VISUs\VisualizationManager.TcVMO</DependentUpon>
     </Compile>

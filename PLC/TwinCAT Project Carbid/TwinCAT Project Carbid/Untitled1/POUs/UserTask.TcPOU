@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="Program_1" Id="{8baa3dab-cece-4a1e-9c5e-978e8968a86a}" SpecialFunc="None">
+  <POU Name="UserTask" Id="{8baa3dab-cece-4a1e-9c5e-978e8968a86a}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM UserTask
 VAR
     tUserDelay : TON;  (* Timer voor gebruikersacties *)
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[(* Testen of VISU werkt later verwijderen*)
+      <ST><![CDATA[(* Testen of VISU werkt later verwijderen *)
 IF GVL_Carbid.Button THEN
    GVL_Carbid.Lamp := TRUE;    (* Zet lamp aan *)
 ELSE
@@ -19,11 +19,9 @@ IF GVL_Carbid.StartProcess THEN
     CASE GVL_Carbid.UserStep OF
         0:  (* Voeg carbid toe *)
             GVL_Carbid.AddCarbid := TRUE;
-            tUserDelay(IN := TRUE, PT := T#2S); (* Voeg 2 seconden vertraging toe *)
-            IF tUserDelay.Q THEN
+            IF GVL_Carbid.CarbidAdded THEN
                 GVL_Carbid.AddCarbid := FALSE;
                 GVL_Carbid.UserStep := 1; (* Ga naar de volgende stap *)
-                tUserDelay(IN := FALSE); (* Reset timer voor volgende stap *)
             END_IF;
 
         1:  (* Voeg water toe *)
@@ -69,8 +67,10 @@ IF GVL_Carbid.StartProcess THEN
     END_CASE;
 END_IF;]]></ST>
     </Implementation>
-    <LineIds Name="Program_1">
-      <LineId Id="184" Count="59" />
+    <LineIds Name="UserTask">
+      <LineId Id="248" Count="11" />
+      <LineId Id="261" Count="2" />
+      <LineId Id="265" Count="42" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
